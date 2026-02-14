@@ -47,18 +47,10 @@ function calculateStats() {
     return stats;
 }
 
-// 渲染統計（動態生成，支援第六代以上）
+// 渲染統計（只顯示總人數）
 function renderStats() {
     const stats = calculateStats();
-    const genIcons = ['', '', '👴', '👨', '🧑', '👶', '👧', '🧒', '👦'];
-
-    // 找出最大代數
-    let maxGen = 2;
-    for (let i = 2; i <= 10; i++) {
-        if (stats[`gen${i}`]) maxGen = i;
-    }
-
-    let html = `
+    document.getElementById('stats').innerHTML = `
         <div class="stat-card">
             <div class="stat-icon members">👨‍👩‍👧‍👦</div>
             <div class="stat-info">
@@ -67,22 +59,6 @@ function renderStats() {
             </div>
         </div>
     `;
-
-    // 動態生成各代統計
-    for (let gen = 2; gen <= maxGen; gen++) {
-        const icon = genIcons[gen] || '👤';
-        html += `
-            <div class="stat-card">
-                <div class="stat-icon gen${gen}">${icon}</div>
-                <div class="stat-info">
-                    <div class="stat-value">${stats[`gen${gen}`] || 0}</div>
-                    <div class="stat-label">第${gen === 2 ? '二' : gen === 3 ? '三' : gen === 4 ? '四' : gen === 5 ? '五' : gen === 6 ? '六' : gen === 7 ? '七' : gen === 8 ? '八' : gen}代</div>
-                </div>
-            </div>
-        `;
-    }
-
-    document.getElementById('stats').innerHTML = html;
 }
 
 // 渲染始祖
@@ -190,11 +166,7 @@ function renderFamilyTree() {
 function renderTreeChildren(children, generation) {
     if (!children || children.length === 0) return '';
 
-    const genLabels = { 3: '第三代', 4: '第四代', 5: '第五代', 6: '第六代' };
-    const genClass = `gen-${generation}`;
-
-    let html = `<div class="branch-content ${genClass}">`;
-    html += `<div class="generation-marker">${genLabels[generation] || `第${generation}代`}</div>`;
+    let html = `<div class="branch-content">`;
     html += '<div class="branch-children">';
 
     children.forEach((child, index) => {

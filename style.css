@@ -521,30 +521,8 @@ header {
     display: block;
 }
 
-.generation-marker {
-    position: absolute;
-    left: -1px;
-    top: 0;
-    transform: translateX(-50%);
-    background: var(--bg-white);
-    color: var(--gen-3);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.15rem 0.5rem;
-    border: 2px solid var(--gen-3);
-    border-radius: 10px;
-    white-space: nowrap;
-}
-
-.gen-3 .generation-marker { color: var(--gen-3); border-color: var(--gen-3); }
-.gen-4 .generation-marker { color: var(--gen-4); border-color: var(--gen-4); }
-.gen-5 .generation-marker { color: var(--gen-5); border-color: var(--gen-5); }
-.gen-6 .generation-marker { color: #E8A87C; border-color: #E8A87C; }
-.gen-7 .generation-marker { color: #C38D9E; border-color: #C38D9E; }
-.gen-8 .generation-marker { color: #41B3A3; border-color: #41B3A3; }
-
 .branch-children {
-    padding-top: 1.5rem;
+    padding-top: 0.5rem;
 }
 
 /* === Tree Node (子節點) === */
