@@ -1,0 +1,478 @@
+/* 基礎設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #8B4513;
+    --primary-light: #D2691E;
+    --secondary-color: #F5DEB3;
+    --bg-color: #FFF8DC;
+    --text-color: #3E2723;
+    --male-color: #4A90D9;
+    --female-color: #E91E63;
+    --spouse-color: #9C27B0;
+    --deceased-color: #757575;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: "Noto Serif TC", "Microsoft JhengHei", serif;
+    background: linear-gradient(135deg, var(--bg-color) 0%, #FAEBD7 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* 頁首 */
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.3em;
+}
+
+header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    letter-spacing: 0.2em;
+}
+
+/* 控制區 */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+}
+
+.controls input {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    font-size: 1rem;
+    width: 300px;
+    max-width: 100%;
+    transition: all 0.3s ease;
+}
+
+.controls input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2);
+}
+
+.controls button {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.controls button:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* 統計區 */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-item .icon {
+    font-size: 1.5rem;
+}
+
+.stat-item .number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-item .label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 主要內容區 */
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 始祖區塊 */
+.ancestor {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.ancestor-card {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #654321 100%);
+    color: white;
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-hover);
+    position: relative;
+}
+
+.ancestor-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="70" font-size="70">🏛️</text></svg>') no-repeat center;
+    background-size: contain;
+}
+
+.ancestor-card h2 {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    letter-spacing: 0.2em;
+}
+
+.ancestor-card .spouse-info {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* 連接線 */
+.connector {
+    width: 4px;
+    height: 40px;
+    background: var(--primary-color);
+    margin: 0 auto;
+}
+
+/* 子女列表 */
+.children-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* 家庭卡片 */
+.family-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.family-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+}
+
+.family-card.highlight {
+    border-color: #FFD700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.family-header {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #EEE8AA 100%);
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.family-header:hover {
+    background: linear-gradient(135deg, #EEE8AA 0%, var(--secondary-color) 100%);
+}
+
+.family-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.family-info .type-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.family-info h3 {
+    font-size: 1.3rem;
+    color: var(--text-color);
+}
+
+.family-info .spouse {
+    font-size: 0.95rem;
+    color: var(--spouse-color);
+    margin-left: 0.5rem;
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.family-card.expanded .toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* 子女詳情 */
+.family-children {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    background: #FAFAFA;
+}
+
+.family-card.expanded .family-children {
+    max-height: 2000px;
+}
+
+.grandchildren-list {
+    padding: 1rem;
+}
+
+.grandchild {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    background: white;
+    border-radius: 10px;
+    border-left: 4px solid var(--male-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.grandchild.female {
+    border-left-color: var(--female-color);
+}
+
+.grandchild.deceased {
+    opacity: 0.6;
+    border-left-color: var(--deceased-color);
+}
+
+.grandchild:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow);
+}
+
+.grandchild .order {
+    width: 28px;
+    height: 28px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.grandchild .name {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.grandchild .type {
+    color: #666;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.grandchild .spouse-name {
+    margin-left: auto;
+    color: var(--spouse-color);
+    font-size: 0.95rem;
+}
+
+.grandchild .deceased-mark {
+    margin-left: auto;
+    color: var(--deceased-color);
+    font-style: italic;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: var(--text-color);
+}
+
+.modal-person {
+    text-align: center;
+}
+
+.modal-person .icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.modal-person h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.modal-person .detail {
+    margin: 0.75rem 0;
+    padding: 0.75rem;
+    background: var(--bg-color);
+    border-radius: 8px;
+}
+
+.modal-person .label {
+    font-weight: bold;
+    color: #666;
+}
+
+/* 頁尾 */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: var(--primary-color);
+    color: white;
+    margin-top: 3rem;
+}
+
+/* 搜尋高亮 */
+.search-highlight {
+    background: #FFEB3B;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+        letter-spacing: 0.1em;
+    }
+
+    .controls input {
+        width: 100%;
+    }
+
+    .children-container {
+        grid-template-columns: 1fr;
+    }
+
+    .ancestor-card {
+        padding: 1.5rem 2rem;
+    }
+
+    .stat-item {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* 列印樣式 */
+@media print {
+    .controls, .modal {
+        display: none !important;
+    }
+
+    .family-card {
+        break-inside: avoid;
+    }
+
+    .family-children {
+        max-height: none !important;
+    }
+}

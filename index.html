@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>許氏家族族譜</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>許氏家族族譜</h1>
+        <p class="subtitle">傳承家族記憶，凝聚血脈情誼</p>
+    </header>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="搜尋姓名...">
+        <button id="expandAll">全部展開</button>
+        <button id="collapseAll">全部收合</button>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <main id="familyTree">
+        <!-- 族譜樹將由 JavaScript 生成 -->
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>許氏家族族譜 &copy; 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+{
+  "name": "許比",
+  "spouse": "許謝英",
+  "children": [
+    {
+      "name": "許玉柳",
+      "type": "長女",
+      "spouse": "洪成",
+      "children": [
+        {"name": "洪昆雄", "type": "長男", "spouse": "賴素貞"},
+        {"name": "洪昆哲", "type": "次男", "spouse": "郭春"},
+        {"name": "洪昆泰", "type": "三男", "spouse": "林惠"},
+        {"name": "洪昆華", "type": "四男", "spouse": "游桂金"},
+        {"name": "洪淑薇", "type": "長女", "spouse": "曾住忠"},
+        {"name": "洪昆鎮", "type": "五男", "spouse": "林美完"},
+        {"name": "洪昆元", "type": "六男", "spouse": "許淑華"},
+        {"name": "洪昆隆", "type": "七男", "spouse": "陳碧霞"},
+        {"name": "洪昆桂", "type": "八男", "spouse": "許櫻美"},
+        {"name": "洪昆杭", "type": "九男", "spouse": "粘麗香"}
+      ]
+    },
+    {
+      "name": "許蚶目",
+      "type": "長男",
+      "spouse": "許顏阿漸",
+      "children": [
+        {"name": "許秀碧", "type": "長女", "note": "歿"},
+        {"name": "許清亮", "type": "長男", "spouse": "施美娟"},
+        {"name": "許美月", "type": "次女", "spouse": "紀仲容"},
+        {"name": "許智仁", "type": "次男", "note": "歿"},
+        {"name": "許三桐", "type": "三男", "spouse": "張惠珠"}
+      ]
+    },
+    {
+      "name": "許金鉗",
+      "type": "次男",
+      "spouse": "許林珍",
+      "children": [
+        {"name": "許金枝", "type": "長女", "spouse": "李省吾"},
+        {"name": "許志賢", "type": "長男", "spouse": "陳素珠"},
+        {"name": "許孟雅", "type": "次女", "spouse": "陳文和"},
+        {"name": "許清悔", "type": "次男", "spouse": "陳足雪"},
+        {"name": "許淑鳳", "type": "三女", "spouse": "李銘財"},
+        {"name": "許玉林", "type": "三男", "spouse": "黃筠珊"},
+        {"name": "許育成", "type": "四男", "spouse": "楊舒琪"},
+        {"name": "許美雲", "type": "四女", "spouse": "曾萬連"}
+      ]
+    },
+    {
+      "name": "許玉花",
+      "type": "次女",
+      "spouse": "林心(林輝)",
+      "children": [
+        {"name": "林天生", "type": "長男", "spouse": "林欣妮"},
+        {"name": "林英微", "type": "長女", "spouse": "姚"},
+        {"name": "林麗珠", "type": "次女", "spouse": "王(歿)"},
+        {"name": "林麗秀", "type": "三女", "spouse": "許偉杰"}
+      ]
+    },
+    {
+      "name": "許金鴻",
+      "type": "三男",
+      "spouse": "許趙桃子",
+      "children": [
+        {"name": "許美嬌", "type": "長女", "spouse": "林瑞元"},
+        {"name": "許美琴", "type": "次女", "spouse": "王明春"},
+        {"name": "許碧蓮", "type": "三女", "spouse": "高有德"},
+        {"name": "許仕諭", "type": "長男"},
+        {"name": "許晉榮", "type": "次男", "spouse": "鄭青青"},
+        {"name": "許仕諺", "type": "三男"},
+        {"name": "許翠娟", "type": "五女", "spouse": "王建民"}
+      ]
+    },
+    {
+      "name": "許木照",
+      "type": "四男",
+      "spouse": "許林瓚",
+      "children": [
+        {"name": "許美禎", "type": "長女", "spouse": "黃國賢"},
+        {"name": "許睿豐", "type": "長男", "spouse": "劉桂蓁"},
+        {"name": "許景開", "type": "次男", "spouse": "張美旦"},
+        {"name": "許和發", "type": "三男", "spouse": "洪惠珍"},
+        {"name": "許敏芳", "type": "次女", "spouse": "陳志榮"}
+      ]
+    },
+    {
+      "name": "許玉翠(碎)",
+      "type": "三女",
+      "spouse": "李爾錫",
+      "children": [
+        {"name": "李宜樺", "type": "長女", "spouse": "林煒杰"},
+        {"name": "李榮華", "type": "長男", "spouse": "陳美蓮"},
+        {"name": "李麗華", "type": "次女", "spouse": "陳慶源"},
+        {"name": "李合祥", "type": "次男", "spouse": "蘇佳睿"},
+        {"name": "李岱樺", "type": "三女", "spouse": "楊勝德"},
+        {"name": "李文隆", "type": "三男", "spouse": "王麗卿"},
+        {"name": "李雅雲", "type": "四女", "spouse": "洪銘宏"}
+      ]
+    },
+    {
+      "name": "許玉瑞",
+      "type": "四女",
+      "spouse": "林茂蒼",
+      "children": [
+        {"name": "林彥邁", "type": "長男", "spouse": "歐美珍"},
+        {"name": "林彥騰", "type": "次男", "spouse": "林妍妤"},
+        {"name": "林秀鳳", "type": "長女", "spouse": "馬宏馨"},
+        {"name": "林上傑", "type": "三男"},
+        {"name": "林緯誠", "type": "四男", "spouse": "郭寶秀"},
+        {"name": "林秀珠", "type": "次女", "spouse": "詹煌明"},
+        {"name": "林坤輝", "type": "五男", "spouse": "林麗玲"}
+      ]
+    },
+    {
+      "name": "許玉炒(彩)",
+      "type": "五女",
+      "spouse": "張竹欣(鐵牛)",
+      "children": [
+        {"name": "張貴美", "type": "長女", "spouse": "賴"},
+        {"name": "張榮儀", "type": "長男", "spouse": "黃玉鶯"},
+        {"name": "張振偉", "type": "次男", "spouse": "李宛儒"},
+        {"name": "張榮禮", "type": "三男", "spouse": "李秀如"},
+        {"name": "張美蓮", "type": "次女", "note": "歿"}
+      ]
+    },
+    {
+      "name": "許玉雪",
+      "type": "六女",
+      "spouse": "陳芳慶",
+      "children": [
+        {"name": "陳輝總", "type": "長男", "note": "歿"},
+        {"name": "陳輝港", "type": "次男", "spouse": "翁淑娟"},
+        {"name": "陳輝棨", "type": "三男", "spouse": "池爾玉"},
+        {"name": "陳姿君", "type": "長女", "spouse": "盧威宏"}
+      ]
+    },
+    {
+      "name": "許棟材",
+      "type": "五男",
+      "spouse": "許林碧霞",
+      "children": [
+        {"name": "許銘松", "type": "長男", "spouse": "周淑娟"},
+        {"name": "許淑惠", "type": "次女", "spouse": "蔣宗叡"},
+        {"name": "許銘全", "type": "次男", "spouse": "張雅閔"}
+      ]
+    },
+    {
+      "name": "許藝寶(尾旺)",
+      "type": "六男",
+      "spouse": "許林玉琴",
+      "children": [
+        {"name": "許晉源", "type": "長男", "spouse": "賴美秀"},
+        {"name": "許美華", "type": "長女", "spouse": "郭先郎"},
+        {"name": "許淑春", "type": "次女", "spouse": "林進春"}
+      ]
+    },
+    {
+      "name": "梁寶貴",
+      "type": "誼女",
+      "spouse": "林連眛",
+      "children": [
+        {"name": "林淑玲", "type": "長女", "spouse": "陳坤聰"},
+        {"name": "林來旺", "type": "長男", "spouse": "吳金蘭"},
+        {"name": "林宏德", "type": "次男"}
+      ]
+    },
+    {
+      "name": "許宏如(許做)",
+      "type": "七女",
+      "spouse": "林正寬",
+      "children": [
+        {"name": "林明昇", "type": "長男"},
+        {"name": "林明灴", "type": "次男", "spouse": "駱哲菱"},
+        {"name": "林佑修", "type": "三男"}
+      ]
+    }
+  ]
+}
