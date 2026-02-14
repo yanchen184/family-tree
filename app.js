@@ -1,46 +1,27 @@
-// 許氏家族族譜 v2.0
-console.log('許氏家族族譜 v2.0');
+// 許氏家族族譜 v3.0 - 樹狀結構版
+console.log('許氏家族族譜 v3.0');
 
 let familyData = null;
-let allPersons = []; // 儲存所有人物以便搜尋
 
 // 載入資料
 async function loadData() {
     try {
         const response = await fetch('family_data.json');
         familyData = await response.json();
-        indexAllPersons(familyData.children, 2);
         renderStats();
         renderAncestor();
-        renderFamilyGrid();
+        renderQuickNav();
+        renderFamilyTree();
         setupEventListeners();
     } catch (error) {
         console.error('載入資料失敗:', error);
-        document.getElementById('familyGrid').innerHTML = `
-            <div style="text-align: center; padding: 3rem; color: #666; grid-column: 1 / -1;">
-                <p style="font-size: 1.25rem;">載入資料時發生錯誤</p>
-                <p style="margin-top: 0.5rem;">請確認 family_data.json 檔案存在</p>
+        document.getElementById('familyTree').innerHTML = `
+            <div class="error-message">
+                <p>載入資料時發生錯誤</p>
+                <p>請確認 family_data.json 檔案存在</p>
             </div>
         `;
     }
-}
-
-// 建立人物索引以便搜尋
-function indexAllPersons(children, generation, parentName = '') {
-    if (!children) return;
-    children.forEach(person => {
-        allPersons.push({
-            name: person.name,
-            type: person.type,
-            spouse: person.spouse,
-            generation,
-            parentName,
-            hasChildren: !!(person.children && person.children.length > 0)
-        });
-        if (person.children) {
-            indexAllPersons(person.children, generation + 1, person.name);
-        }
-    });
 }
 
 // 遞迴計算人數
@@ -61,7 +42,7 @@ function countMembers(children, stats, generation) {
 
 // 計算統計資料
 function calculateStats() {
-    const stats = { total: 2, gen2: 0, gen3: 0, gen4: 0, gen5: 0 }; // 始祖夫妻
+    const stats = { total: 2, gen2: 0, gen3: 0, gen4: 0, gen5: 0 };
     countMembers(familyData.children, stats, 2);
     return stats;
 }
@@ -112,20 +93,49 @@ function renderStats() {
 function renderAncestor() {
     document.getElementById('ancestorSection').innerHTML = `
         <div class="ancestor-card">
+            <div class="ancestor-badge">始祖</div>
             <div class="ancestor-names">
                 <div class="ancestor-person">
-                    <div class="name">${familyData.name}</div>
-                    <div class="role">始祖</div>
+                    <span class="ancestor-icon">👴</span>
+                    <span class="ancestor-name">${familyData.name}</span>
                 </div>
-                <div class="ancestor-connector">♥</div>
+                <div class="ancestor-connector">
+                    <span class="heart">♥</span>
+                </div>
                 <div class="ancestor-person">
-                    <div class="name">${familyData.spouse}</div>
-                    <div class="role">始祖母</div>
+                    <span class="ancestor-icon">👵</span>
+                    <span class="ancestor-name">${familyData.spouse}</span>
                 </div>
             </div>
         </div>
-        <div class="tree-connector"></div>
     `;
+}
+
+// 渲染快速導航
+function renderQuickNav() {
+    const nav = document.getElementById('quickNav');
+    let html = '';
+    familyData.children.forEach((child, index) => {
+        const label = child.type.replace('第二代', '');
+        html += `<button class="quick-nav-btn" onclick="scrollToFamily(${index})">${label} ${child.name}</button>`;
+    });
+    nav.innerHTML = html;
+}
+
+// 滾動到指定家族
+function scrollToFamily(index) {
+    const familyNode = document.querySelector(`.tree-branch[data-index="${index}"]`);
+    if (familyNode) {
+        familyNode.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 確保展開
+        const content = familyNode.querySelector('.branch-content');
+        if (content && !familyNode.classList.contains('expanded')) {
+            familyNode.classList.add('expanded');
+        }
+        // 高亮效果
+        familyNode.classList.add('highlight');
+        setTimeout(() => familyNode.classList.remove('highlight'), 2000);
+    }
 }
 
 // 判斷性別
@@ -135,100 +145,94 @@ function getGender(type) {
     return 'male';
 }
 
-// 渲染家族網格
-function renderFamilyGrid() {
-    const container = document.getElementById('familyGrid');
-    let html = '';
+// 計算後代人數
+function countDescendants(person) {
+    if (!person.children) return 0;
+    let count = person.children.length;
+    person.children.forEach(child => {
+        if (child.spouse) count++;
+        count += countDescendants(child);
+    });
+    return count;
+}
+
+// 渲染族譜樹
+function renderFamilyTree() {
+    const container = document.getElementById('familyTree');
+    let html = '<div class="tree-container">';
 
     familyData.children.forEach((child, index) => {
         const hasChildren = child.children && child.children.length > 0;
+        const descendantCount = countDescendants(child);
+        const gender = getGender(child.type);
+
         html += `
-            <div class="family-card" data-index="${index}" data-name="${child.name}">
-                <div class="family-header" onclick="toggleFamily(${index})">
-                    <div class="family-main-info">
-                        <span class="type-badge">${child.type}</span>
-                        <div class="family-names">
-                            <span class="main-name">${child.name}</span>
-                            ${child.spouse ? `<span class="spouse-name">配偶：${child.spouse}</span>` : ''}
+            <div class="tree-branch" data-index="${index}" data-name="${child.name}">
+                <div class="branch-header" onclick="toggleBranch(this)">
+                    <div class="branch-line-vertical"></div>
+                    <div class="branch-toggle">${hasChildren ? '▼' : '●'}</div>
+                    <div class="branch-person ${gender}">
+                        <span class="person-icon">${gender === 'female' ? '👩' : '👨'}</span>
+                        <div class="person-details">
+                            <span class="person-name">${child.name}</span>
+                            <span class="person-type">${child.type}</span>
+                            ${child.spouse ? `<span class="person-spouse">配偶：${child.spouse}</span>` : ''}
                         </div>
+                        ${hasChildren ? `<span class="descendant-count">${descendantCount} 人</span>` : ''}
                     </div>
-                    ${hasChildren ? `
-                        <div class="toggle-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-                                <path d="m6 9 6 6 6-6"/>
-                            </svg>
-                        </div>
-                    ` : ''}
                 </div>
-                ${hasChildren ? renderChildrenSection(child.children, 3) : ''}
+                ${hasChildren ? renderTreeChildren(child.children, 3) : ''}
             </div>
-        `;
-    });
-
-    container.innerHTML = html;
-}
-
-// 渲染子女區塊（支援多層級）
-function renderChildrenSection(children, generation) {
-    if (!children || children.length === 0) return '';
-
-    let html = '<div class="family-children"><div class="children-list">';
-
-    children.forEach((child, index) => {
-        const gender = getGender(child.type);
-        const isDeceased = child.note === '歿';
-        const hasChildren = child.children && child.children.length > 0;
-
-        html += `
-            <div class="person-row ${gender} ${isDeceased ? 'deceased' : ''}"
-                 onclick="showPersonDetail(event, '${escapeHtml(child.name)}', '${escapeHtml(child.type || '')}', '${escapeHtml(child.spouse || '')}', '${escapeHtml(child.note || '')}', ${JSON.stringify(child.children || []).replace(/"/g, '&quot;')})">
-                <span class="person-order">${index + 1}</span>
-                <div class="person-info">
-                    <span class="person-name">${child.name}</span>
-                    <span class="person-type">${child.type || ''}</span>
-                    ${child.spouse ? `<div class="person-spouse">配偶：${child.spouse}</div>` : ''}
-                </div>
-                ${isDeceased ? '<span class="person-note">已歿</span>' : ''}
-                ${hasChildren ? `<span class="has-children-indicator">▼ ${child.children.length}人</span>` : ''}
-            </div>
-            ${hasChildren ? renderNestedChildren(child.children, generation + 1) : ''}
-        `;
-    });
-
-    html += '</div></div>';
-    return html;
-}
-
-// 渲染巢狀子女
-function renderNestedChildren(children, generation) {
-    if (!children || children.length === 0) return '';
-
-    const genLabels = { 3: '第三代', 4: '第四代', 5: '第五代', 6: '第六代' };
-    let html = `<div class="nested-children">
-        <span class="generation-tag">${genLabels[generation] || `第${generation}代`}</span>`;
-
-    children.forEach((child, index) => {
-        const gender = getGender(child.type);
-        const isDeceased = child.note === '歿';
-        const hasChildren = child.children && child.children.length > 0;
-
-        html += `
-            <div class="person-row ${gender} ${isDeceased ? 'deceased' : ''}"
-                 onclick="showPersonDetail(event, '${escapeHtml(child.name)}', '${escapeHtml(child.type || '')}', '${escapeHtml(child.spouse || '')}', '${escapeHtml(child.note || '')}', ${JSON.stringify(child.children || []).replace(/"/g, '&quot;')})">
-                <span class="person-order">${index + 1}</span>
-                <div class="person-info">
-                    <span class="person-name">${child.name}</span>
-                    <span class="person-type">${child.type || ''}</span>
-                    ${child.spouse ? `<div class="person-spouse">配偶：${child.spouse}</div>` : ''}
-                </div>
-                ${isDeceased ? '<span class="person-note">已歿</span>' : ''}
-                ${hasChildren ? `<span class="has-children-indicator">▼ ${child.children.length}人</span>` : ''}
-            </div>
-            ${hasChildren ? renderNestedChildren(child.children, generation + 1) : ''}
         `;
     });
 
     html += '</div>';
+    container.innerHTML = html;
+}
+
+// 渲染樹狀子節點
+function renderTreeChildren(children, generation) {
+    if (!children || children.length === 0) return '';
+
+    const genLabels = { 3: '第三代', 4: '第四代', 5: '第五代', 6: '第六代' };
+    const genClass = `gen-${generation}`;
+
+    let html = `<div class="branch-content ${genClass}">`;
+    html += `<div class="generation-marker">${genLabels[generation] || `第${generation}代`}</div>`;
+    html += '<div class="branch-children">';
+
+    children.forEach((child, index) => {
+        const gender = getGender(child.type);
+        const isDeceased = child.note === '歿';
+        const hasChildren = child.children && child.children.length > 0;
+        const descendantCount = countDescendants(child);
+        const isLast = index === children.length - 1;
+
+        html += `
+            <div class="tree-node ${isLast ? 'last-node' : ''}" data-name="${child.name}">
+                <div class="node-connector">
+                    <div class="connector-horizontal"></div>
+                    <div class="connector-vertical ${isLast ? 'half' : ''}"></div>
+                </div>
+                <div class="node-content ${hasChildren ? 'has-children' : ''}" onclick="${hasChildren ? 'toggleNode(this)' : `showPersonModal(event, '${escapeHtml(child.name)}', '${escapeHtml(child.type || '')}', '${escapeHtml(child.spouse || '')}', '${escapeHtml(child.note || '')}')`}">
+                    <div class="node-toggle">${hasChildren ? '▼' : ''}</div>
+                    <div class="node-person ${gender} ${isDeceased ? 'deceased' : ''}">
+                        <span class="person-icon">${gender === 'female' ? '👩' : '👨'}</span>
+                        <div class="person-details">
+                            <span class="person-name">${child.name}</span>
+                            ${child.type ? `<span class="person-type">${child.type}</span>` : ''}
+                            ${child.spouse ? `<span class="person-spouse">配偶：${child.spouse}</span>` : ''}
+                            ${isDeceased ? '<span class="person-deceased">已歿</span>' : ''}
+                        </div>
+                        ${hasChildren ? `<span class="descendant-count">${descendantCount} 人</span>` : ''}
+                    </div>
+                </div>
+                ${hasChildren ? renderTreeChildren(child.children, generation + 1) : ''}
+            </div>
+        `;
+    });
+
+    html += '</div></div>';
     return html;
 }
 
@@ -244,16 +248,21 @@ function escapeHtml(text) {
     }[char]));
 }
 
-// 切換家庭展開狀態
-function toggleFamily(index) {
-    const card = document.querySelector(`.family-card[data-index="${index}"]`);
-    if (card) {
-        card.classList.toggle('expanded');
-    }
+// 切換分支展開
+function toggleBranch(header) {
+    const branch = header.closest('.tree-branch');
+    branch.classList.toggle('expanded');
 }
 
-// 顯示人物詳情
-function showPersonDetail(event, name, type, spouse, note, children) {
+// 切換節點展開
+function toggleNode(content) {
+    const node = content.closest('.tree-node');
+    node.classList.toggle('expanded');
+    event.stopPropagation();
+}
+
+// 顯示人物 Modal
+function showPersonModal(event, name, type, spouse, note) {
     event.stopPropagation();
 
     const modal = document.getElementById('modal');
@@ -261,19 +270,7 @@ function showPersonDetail(event, name, type, spouse, note, children) {
     const gender = getGender(type);
     const icon = gender === 'female' ? '👩' : '👨';
 
-    // 解析 children
-    let childrenData = [];
-    if (typeof children === 'string') {
-        try {
-            childrenData = JSON.parse(children.replace(/&quot;/g, '"'));
-        } catch (e) {
-            childrenData = [];
-        }
-    } else if (Array.isArray(children)) {
-        childrenData = children;
-    }
-
-    let html = `
+    modalBody.innerHTML = `
         <div class="modal-person">
             <div class="modal-avatar ${gender}">${icon}</div>
             <h2>${name}</h2>
@@ -297,96 +294,98 @@ function showPersonDetail(event, name, type, spouse, note, children) {
                     </div>
                 ` : ''}
             </div>
-            ${childrenData.length > 0 ? `
-                <div class="modal-children-section">
-                    <h3>子女 (${childrenData.length}人)</h3>
-                    <div class="modal-children-list">
-                        ${childrenData.map(child => `
-                            <span class="modal-child-tag">
-                                ${getGender(child.type) === 'female' ? '👧' : '👦'} ${child.name}
-                            </span>
-                        `).join('')}
-                    </div>
-                </div>
-            ` : ''}
         </div>
     `;
 
-    modalBody.innerHTML = html;
     modal.classList.add('active');
 }
 
 // 搜尋功能
 function searchPerson(keyword) {
-    const cards = document.querySelectorAll('.family-card');
-    const personRows = document.querySelectorAll('.person-row');
-
-    // 移除所有高亮
-    cards.forEach(card => card.classList.remove('highlight'));
-    personRows.forEach(row => row.classList.remove('search-match'));
+    // 移除所有高亮和搜尋標記
+    document.querySelectorAll('.search-match').forEach(el => el.classList.remove('search-match'));
+    document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
 
     if (!keyword.trim()) return;
 
     const searchTerm = keyword.toLowerCase();
-    let found = false;
+    let firstMatch = null;
 
-    // 搜尋第二代
-    familyData.children.forEach((child, index) => {
-        const card = document.querySelector(`.family-card[data-index="${index}"]`);
-        let matchInFamily = false;
+    // 搜尋所有人名
+    document.querySelectorAll('.person-name').forEach(nameEl => {
+        if (nameEl.textContent.toLowerCase().includes(searchTerm)) {
+            const node = nameEl.closest('.tree-node') || nameEl.closest('.tree-branch');
+            if (node) {
+                // 展開所有父層
+                let parent = node.parentElement;
+                while (parent) {
+                    if (parent.classList.contains('branch-content')) {
+                        const branch = parent.closest('.tree-branch');
+                        if (branch) branch.classList.add('expanded');
+                    }
+                    if (parent.classList.contains('tree-node')) {
+                        parent.classList.add('expanded');
+                    }
+                    parent = parent.parentElement;
+                }
 
-        // 檢查第二代本人及配偶
-        if (child.name.toLowerCase().includes(searchTerm) ||
-            (child.spouse && child.spouse.toLowerCase().includes(searchTerm))) {
-            matchInFamily = true;
-            card.classList.add('highlight');
-        }
+                // 標記搜尋結果
+                node.classList.add('search-match');
 
-        // 遞迴搜尋所有後代
-        if (searchInChildren(child.children, searchTerm, card)) {
-            matchInFamily = true;
-        }
-
-        if (matchInFamily && !found) {
-            card.classList.add('expanded');
-            setTimeout(() => {
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-            found = true;
-        }
-    });
-}
-
-// 遞迴搜尋子女
-function searchInChildren(children, searchTerm, card) {
-    if (!children) return false;
-    let found = false;
-
-    children.forEach(child => {
-        if (child.name.toLowerCase().includes(searchTerm) ||
-            (child.spouse && child.spouse.toLowerCase().includes(searchTerm))) {
-            found = true;
-            card.classList.add('highlight', 'expanded');
-        }
-        if (child.children && searchInChildren(child.children, searchTerm, card)) {
-            found = true;
+                if (!firstMatch) {
+                    firstMatch = node;
+                }
+            }
         }
     });
 
-    return found;
+    // 搜尋配偶
+    document.querySelectorAll('.person-spouse').forEach(spouseEl => {
+        if (spouseEl.textContent.toLowerCase().includes(searchTerm)) {
+            const node = spouseEl.closest('.tree-node') || spouseEl.closest('.tree-branch');
+            if (node) {
+                let parent = node.parentElement;
+                while (parent) {
+                    if (parent.classList.contains('branch-content')) {
+                        const branch = parent.closest('.tree-branch');
+                        if (branch) branch.classList.add('expanded');
+                    }
+                    if (parent.classList.contains('tree-node')) {
+                        parent.classList.add('expanded');
+                    }
+                    parent = parent.parentElement;
+                }
+                node.classList.add('search-match');
+                if (!firstMatch) firstMatch = node;
+            }
+        }
+    });
+
+    // 滾動到第一個匹配項
+    if (firstMatch) {
+        setTimeout(() => {
+            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    }
 }
 
 // 全部展開
 function expandAll() {
-    document.querySelectorAll('.family-card').forEach(card => {
-        card.classList.add('expanded');
+    document.querySelectorAll('.tree-branch').forEach(branch => {
+        branch.classList.add('expanded');
+    });
+    document.querySelectorAll('.tree-node').forEach(node => {
+        node.classList.add('expanded');
     });
 }
 
 // 全部收合
 function collapseAll() {
-    document.querySelectorAll('.family-card').forEach(card => {
-        card.classList.remove('expanded');
+    document.querySelectorAll('.tree-branch').forEach(branch => {
+        branch.classList.remove('expanded');
+    });
+    document.querySelectorAll('.tree-node').forEach(node => {
+        node.classList.remove('expanded');
     });
 }
 
@@ -397,7 +396,6 @@ function closeModal() {
 
 // 設置事件監聽器
 function setupEventListeners() {
-    // 搜尋
     const searchInput = document.getElementById('searchInput');
     const clearBtn = document.getElementById('clearSearch');
     let searchTimeout;
@@ -415,15 +413,12 @@ function setupEventListeners() {
         searchInput.focus();
     });
 
-    // 全部展開/收合
     document.getElementById('expandAll').addEventListener('click', expandAll);
     document.getElementById('collapseAll').addEventListener('click', collapseAll);
 
-    // Modal 關閉
     document.querySelector('.modal-close').addEventListener('click', closeModal);
     document.querySelector('.modal-overlay').addEventListener('click', closeModal);
 
-    // ESC 關閉 Modal
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeModal();
