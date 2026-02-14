@@ -52,7 +52,6 @@ function renderStats() {
     const stats = calculateStats();
     document.getElementById('stats').innerHTML = `
         <div class="stat-card">
-            <div class="stat-icon members">👨‍👩‍👧‍👦</div>
             <div class="stat-info">
                 <div class="stat-value">${stats.total}</div>
                 <div class="stat-label">總人數</div>
@@ -68,14 +67,12 @@ function renderAncestor() {
             <div class="ancestor-badge">始祖</div>
             <div class="ancestor-names">
                 <div class="ancestor-person">
-                    <span class="ancestor-icon">👴</span>
                     <span class="ancestor-name">${familyData.name}</span>
                 </div>
                 <div class="ancestor-connector">
                     <span class="heart">♥</span>
                 </div>
                 <div class="ancestor-person">
-                    <span class="ancestor-icon">👵</span>
                     <span class="ancestor-name">${familyData.spouse}</span>
                 </div>
             </div>
@@ -144,7 +141,6 @@ function renderFamilyTree() {
                     <div class="branch-line-vertical"></div>
                     <div class="branch-toggle">${hasChildren ? '▼' : '●'}</div>
                     <div class="branch-person ${gender}">
-                        <span class="person-icon">${gender === 'female' ? '👩' : '👨'}</span>
                         <div class="person-details">
                             <span class="person-name">${child.name}</span>
                             <span class="person-type">${child.type}</span>
@@ -185,7 +181,6 @@ function renderTreeChildren(children, generation) {
                 <div class="node-content ${hasChildren ? 'has-children' : ''}" onclick="${hasChildren ? 'toggleNode(this)' : `showPersonModal(event, '${escapeHtml(child.name)}', '${escapeHtml(child.type || '')}', '${escapeHtml(child.spouse || '')}', '${escapeHtml(child.note || '')}')`}">
                     <div class="node-toggle">${hasChildren ? '▼' : ''}</div>
                     <div class="node-person ${gender} ${isDeceased ? 'deceased' : ''}">
-                        <span class="person-icon">${gender === 'female' ? '👩' : '👨'}</span>
                         <div class="person-details">
                             <span class="person-name">${child.name}</span>
                             ${child.type ? `<span class="person-type">${child.type}</span>` : ''}
