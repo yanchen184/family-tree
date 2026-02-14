@@ -47,10 +47,12 @@ function calculateStats() {
     return stats;
 }
 
-// 渲染統計（只顯示總人數）
+// 渲染統計（顯示總人數及各代人數）
 function renderStats() {
     const stats = calculateStats();
-    document.getElementById('stats').innerHTML = `
+    const genLabels = ['', '', '子代', '孫代', '曾孫代', '玄孫代', '來孫代', '晜孫代', '仍孫代', '雲孫代'];
+
+    let html = `
         <div class="stat-card">
             <div class="stat-info">
                 <div class="stat-value">${stats.total}</div>
@@ -58,6 +60,23 @@ function renderStats() {
             </div>
         </div>
     `;
+
+    // 動態顯示各代人數（從第2代開始）
+    for (let i = 2; i <= 10; i++) {
+        if (stats[`gen${i}`]) {
+            const label = genLabels[i] || `第${i}代`;
+            html += `
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <div class="stat-value">${stats[`gen${i}`]}</div>
+                        <div class="stat-label">${label}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    document.getElementById('stats').innerHTML = html;
 }
 
 // 渲染始祖
