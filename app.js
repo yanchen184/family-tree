@@ -40,17 +40,25 @@ function countMembers(children, stats, generation) {
     });
 }
 
-// 計算統計資料
+// 計算統計資料（動態支援任意代數）
 function calculateStats() {
-    const stats = { total: 2, gen2: 0, gen3: 0, gen4: 0, gen5: 0 };
+    const stats = { total: 2 }; // 始祖夫妻
     countMembers(familyData.children, stats, 2);
     return stats;
 }
 
-// 渲染統計
+// 渲染統計（動態生成，支援第六代以上）
 function renderStats() {
     const stats = calculateStats();
-    document.getElementById('stats').innerHTML = `
+    const genIcons = ['', '', '👴', '👨', '🧑', '👶', '👧', '🧒', '👦'];
+
+    // 找出最大代數
+    let maxGen = 2;
+    for (let i = 2; i <= 10; i++) {
+        if (stats[`gen${i}`]) maxGen = i;
+    }
+
+    let html = `
         <div class="stat-card">
             <div class="stat-icon members">👨‍👩‍👧‍👦</div>
             <div class="stat-info">
@@ -58,35 +66,23 @@ function renderStats() {
                 <div class="stat-label">總人數</div>
             </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon gen2">👴</div>
-            <div class="stat-info">
-                <div class="stat-value">${stats.gen2 || 0}</div>
-                <div class="stat-label">第二代</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon gen3">👨</div>
-            <div class="stat-info">
-                <div class="stat-value">${stats.gen3 || 0}</div>
-                <div class="stat-label">第三代</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon gen4">🧑</div>
-            <div class="stat-info">
-                <div class="stat-value">${stats.gen4 || 0}</div>
-                <div class="stat-label">第四代</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon gen5">👶</div>
-            <div class="stat-info">
-                <div class="stat-value">${stats.gen5 || 0}</div>
-                <div class="stat-label">第五代</div>
-            </div>
-        </div>
     `;
+
+    // 動態生成各代統計
+    for (let gen = 2; gen <= maxGen; gen++) {
+        const icon = genIcons[gen] || '👤';
+        html += `
+            <div class="stat-card">
+                <div class="stat-icon gen${gen}">${icon}</div>
+                <div class="stat-info">
+                    <div class="stat-value">${stats[`gen${gen}`] || 0}</div>
+                    <div class="stat-label">第${gen === 2 ? '二' : gen === 3 ? '三' : gen === 4 ? '四' : gen === 5 ? '五' : gen === 6 ? '六' : gen === 7 ? '七' : gen === 8 ? '八' : gen}代</div>
+                </div>
+            </div>
+        `;
+    }
+
+    document.getElementById('stats').innerHTML = html;
 }
 
 // 渲染始祖
