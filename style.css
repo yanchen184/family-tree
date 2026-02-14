@@ -1,4 +1,5 @@
-/* 基礎設定 */
+/* 許氏家族族譜 v2.0 - 專業版樣式 */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,254 +7,502 @@
 }
 
 :root {
-    --primary-color: #8B4513;
-    --primary-light: #D2691E;
-    --secondary-color: #F5DEB3;
-    --bg-color: #FFF8DC;
-    --text-color: #3E2723;
-    --male-color: #4A90D9;
-    --female-color: #E91E63;
-    --spouse-color: #9C27B0;
-    --deceased-color: #757575;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+    /* 主色系 - 古典褐金 */
+    --primary-900: #3D2914;
+    --primary-800: #5C3D1E;
+    --primary-700: #7A5128;
+    --primary-600: #8B5A2B;
+    --primary-500: #A0522D;
+    --primary-400: #CD853F;
+    --primary-300: #DEB887;
+    --primary-200: #F5DEB3;
+    --primary-100: #FFF8DC;
+    --primary-50: #FFFEF7;
+
+    /* 輔助色 */
+    --male-color: #2563EB;
+    --male-bg: #EFF6FF;
+    --female-color: #DB2777;
+    --female-bg: #FDF2F8;
+    --spouse-color: #7C3AED;
+    --deceased-color: #6B7280;
+    --deceased-bg: #F3F4F6;
+
+    /* 代數顏色 */
+    --gen2-color: #92400E;
+    --gen3-color: #065F46;
+    --gen4-color: #1E40AF;
+    --gen5-color: #6B21A8;
+
+    /* 中性色 */
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+
+    /* 效果 */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    --radius-sm: 4px;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    --transition: all 0.2s ease;
 }
 
 body {
-    font-family: "Noto Serif TC", "Microsoft JhengHei", serif;
-    background: linear-gradient(135deg, var(--bg-color) 0%, #FAEBD7 100%);
-    color: var(--text-color);
+    font-family: 'Noto Serif TC', 'Microsoft JhengHei', serif;
+    background: linear-gradient(180deg, var(--primary-100) 0%, var(--gray-50) 100%);
+    color: var(--gray-800);
     min-height: 100vh;
     line-height: 1.6;
 }
 
-/* 頁首 */
+/* === Header === */
 header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    background: linear-gradient(135deg, var(--primary-800) 0%, var(--primary-600) 100%);
     color: white;
-    text-align: center;
-    padding: 2rem 1rem;
-    box-shadow: var(--shadow);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.3em;
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
 }
 
-header .subtitle {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    letter-spacing: 0.2em;
-}
-
-/* 控制區 */
-.controls {
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
     gap: 1rem;
-    padding: 1.5rem;
+}
+
+.logo-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.logo-text h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.logo-text .subtitle {
+    font-size: 0.875rem;
+    opacity: 0.85;
+    letter-spacing: 0.05em;
+}
+
+.header-meta .version {
+    background: rgba(255,255,255,0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* === Toolbar === */
+.toolbar {
+    background: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
     flex-wrap: wrap;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: var(--shadow);
 }
 
-.controls input {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid var(--primary-color);
-    border-radius: 25px;
-    font-size: 1rem;
-    width: 300px;
-    max-width: 100%;
-    transition: all 0.3s ease;
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+    min-width: 200px;
 }
 
-.controls input:focus {
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--gray-400);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 2.75rem;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-full);
+    font-size: 0.9375rem;
+    font-family: inherit;
+    transition: var(--transition);
+    background: var(--gray-50);
+}
+
+.search-box input:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2);
-}
-
-.controls button {
-    padding: 0.75rem 1.5rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.controls button:hover {
-    background: var(--primary-light);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-
-/* 統計區 */
-.stats {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 1rem;
-    flex-wrap: wrap;
-}
-
-.stat-item {
+    border-color: var(--primary-400);
     background: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    display: flex;
+    box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.15);
+}
+
+.clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: var(--gray-200);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--gray-500);
+    display: none;
     align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.clear-btn:hover {
+    background: var(--gray-300);
+    color: var(--gray-700);
+}
+
+.search-box input:not(:placeholder-shown) + .clear-btn {
+    display: flex;
+}
+
+.toolbar-actions {
+    display: flex;
     gap: 0.5rem;
 }
 
-.stat-item .icon {
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-outline {
+    background: white;
+    border: 1.5px solid var(--gray-300);
+    color: var(--gray-700);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary-400);
+    color: var(--primary-600);
+    background: var(--primary-50);
+}
+
+/* === Stats === */
+.stats-section {
+    padding: 1.5rem 2rem;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.stats-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-200);
+    min-width: 140px;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-icon.members { background: var(--primary-200); }
+.stat-icon.gen2 { background: #FEF3C7; }
+.stat-icon.gen3 { background: #D1FAE5; }
+.stat-icon.gen4 { background: #DBEAFE; }
+.stat-icon.gen5 { background: #EDE9FE; }
+
+.stat-info .stat-value {
     font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    line-height: 1;
 }
 
-.stat-item .number {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
+.stat-info .stat-label {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    margin-top: 0.25rem;
 }
 
-.stat-item .label {
-    font-size: 0.9rem;
-    color: #666;
-}
-
-/* 主要內容區 */
-main {
+/* === Main Content === */
+.main-content {
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
 }
 
-/* 始祖區塊 */
-.ancestor {
+/* === Ancestor Section === */
+.ancestor-section {
     text-align: center;
     margin-bottom: 2rem;
 }
 
 .ancestor-card {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #654321 100%);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-800) 100%);
     color: white;
     padding: 2rem 3rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow-hover);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
     position: relative;
 }
 
 .ancestor-card::before {
-    content: '';
+    content: '始祖';
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="70" font-size="70">🏛️</text></svg>') no-repeat center;
-    background-size: contain;
+    background: var(--primary-400);
+    padding: 0.25rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
 }
 
-.ancestor-card h2 {
-    font-size: 2rem;
-    margin-top: 1.5rem;
-    letter-spacing: 0.2em;
-}
-
-.ancestor-card .spouse-info {
-    margin-top: 0.5rem;
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
-
-/* 連接線 */
-.connector {
-    width: 4px;
-    height: 40px;
-    background: var(--primary-color);
-    margin: 0 auto;
-}
-
-/* 子女列表 */
-.children-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+.ancestor-names {
+    display: flex;
+    align-items: center;
     gap: 1.5rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
-/* 家庭卡片 */
+.ancestor-person {
+    text-align: center;
+}
+
+.ancestor-person .name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.ancestor-person .role {
+    font-size: 0.8125rem;
+    opacity: 0.8;
+    margin-top: 0.25rem;
+}
+
+.ancestor-connector {
+    font-size: 1.5rem;
+    opacity: 0.6;
+}
+
+/* Connector Line */
+.tree-connector {
+    width: 3px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--primary-600), var(--primary-400));
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* === Generation Label === */
+.generation-label {
+    text-align: center;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.generation-label::before,
+.generation-label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 60px);
+    height: 1px;
+    background: var(--gray-300);
+}
+
+.generation-label::before { left: 0; }
+.generation-label::after { right: 0; }
+
+.generation-label {
+    display: inline-block;
+    background: var(--gen2-color);
+    color: white;
+    padding: 0.375rem 1.25rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* === Family Grid === */
+.family-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.25rem;
+}
+
+/* === Family Card === */
 .family-card {
     background: white;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border: 1px solid var(--gray-200);
+    transition: var(--transition);
 }
 
 .family-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--primary-light);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-300);
 }
 
 .family-card.highlight {
-    border-color: #FFD700;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    border-color: #FBBF24;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
 }
 
 .family-header {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, #EEE8AA 100%);
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, var(--primary-100) 0%, var(--primary-200) 100%);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: var(--transition);
+    border-bottom: 1px solid var(--primary-300);
 }
 
 .family-header:hover {
-    background: linear-gradient(135deg, #EEE8AA 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--primary-200) 0%, var(--primary-300) 100%);
 }
 
-.family-info {
+.family-main-info {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
-.family-info .type-badge {
-    background: var(--primary-color);
+.type-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    padding: 0.25rem 0.5rem;
+    background: var(--primary-700);
     color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    border-radius: var(--radius);
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
-.family-info h3 {
-    font-size: 1.3rem;
-    color: var(--text-color);
+.family-names {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
 }
 
-.family-info .spouse {
-    font-size: 0.95rem;
+.family-names .main-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.family-names .spouse-name {
+    font-size: 0.8125rem;
     color: var(--spouse-color);
-    margin-left: 0.5rem;
 }
 
 .toggle-icon {
-    font-size: 1.5rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-500);
     transition: transform 0.3s ease;
 }
 
@@ -261,86 +510,139 @@ main {
     transform: rotate(180deg);
 }
 
-/* 子女詳情 */
+/* === Family Children === */
 .family-children {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease;
-    background: #FAFAFA;
+    transition: max-height 0.4s ease;
+    background: var(--gray-50);
 }
 
 .family-card.expanded .family-children {
-    max-height: 2000px;
+    max-height: 3000px;
 }
 
-.grandchildren-list {
-    padding: 1rem;
+.children-list {
+    padding: 0.75rem;
 }
 
-.grandchild {
+/* === Person Row === */
+.person-row {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
+    padding: 0.625rem 0.75rem;
+    margin: 0.25rem 0;
     background: white;
-    border-radius: 10px;
-    border-left: 4px solid var(--male-color);
-    transition: all 0.3s ease;
+    border-radius: var(--radius);
+    border-left: 3px solid var(--male-color);
     cursor: pointer;
+    transition: var(--transition);
 }
 
-.grandchild.female {
+.person-row.female {
     border-left-color: var(--female-color);
 }
 
-.grandchild.deceased {
-    opacity: 0.6;
+.person-row.deceased {
     border-left-color: var(--deceased-color);
+    opacity: 0.7;
 }
 
-.grandchild:hover {
-    transform: translateX(5px);
+.person-row:hover {
+    transform: translateX(4px);
     box-shadow: var(--shadow);
 }
 
-.grandchild .order {
-    width: 28px;
-    height: 28px;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 50%;
+.person-row.search-match {
+    background: #FEF3C7;
+    border-left-color: #F59E0B;
+}
+
+.person-order {
+    width: 24px;
+    height: 24px;
+    background: var(--gray-200);
+    color: var(--gray-600);
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
-    margin-right: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.75rem;
     flex-shrink: 0;
 }
 
-.grandchild .name {
-    font-weight: bold;
-    font-size: 1.1rem;
+.person-info {
+    flex: 1;
+    min-width: 0;
 }
 
-.grandchild .type {
-    color: #666;
-    font-size: 0.9rem;
+.person-name {
+    font-weight: 600;
+    color: var(--gray-900);
+    font-size: 0.9375rem;
+}
+
+.person-type {
+    font-size: 0.75rem;
+    color: var(--gray-500);
     margin-left: 0.5rem;
 }
 
-.grandchild .spouse-name {
-    margin-left: auto;
+.person-spouse {
+    font-size: 0.8125rem;
     color: var(--spouse-color);
-    font-size: 0.95rem;
+    margin-top: 0.125rem;
 }
 
-.grandchild .deceased-mark {
-    margin-left: auto;
+.person-note {
+    font-size: 0.75rem;
     color: var(--deceased-color);
     font-style: italic;
+    margin-left: auto;
+    padding-left: 0.5rem;
 }
 
-/* Modal */
+.has-children-indicator {
+    margin-left: auto;
+    padding-left: 0.5rem;
+    color: var(--gray-400);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* === Nested Children === */
+.nested-children {
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px dashed var(--gray-300);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.nested-children .generation-tag {
+    display: inline-block;
+    background: var(--gen3-color);
+    color: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius);
+    font-size: 0.625rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.nested-children .nested-children .generation-tag {
+    background: var(--gen4-color);
+}
+
+.nested-children .nested-children .nested-children .generation-tag {
+    background: var(--gen5-color);
+}
+
+/* === Modal === */
 .modal {
     display: none;
     position: fixed;
@@ -348,31 +650,41 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
     z-index: 1000;
-    justify-content: center;
-    align-items: center;
 }
 
 .modal.active {
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
 }
 
 .modal-content {
+    position: relative;
     background: white;
     padding: 2rem;
-    border-radius: 15px;
-    max-width: 500px;
+    border-radius: var(--radius-xl);
+    max-width: 480px;
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
-    position: relative;
-    animation: slideIn 0.3s ease;
+    box-shadow: var(--shadow-xl);
+    animation: modalSlideIn 0.3s ease;
 }
 
-@keyframes slideIn {
+@keyframes modalSlideIn {
     from {
-        transform: translateY(-50px);
+        transform: translateY(-20px);
         opacity: 0;
     }
     to {
@@ -381,90 +693,595 @@ main {
     }
 }
 
-.close {
+.modal-close {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    font-size: 2rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--gray-100);
+    border-radius: var(--radius-full);
     cursor: pointer;
-    color: #999;
-    transition: color 0.3s ease;
+    font-size: 1.5rem;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
 }
 
-.close:hover {
-    color: var(--text-color);
+.modal-close:hover {
+    background: var(--gray-200);
+    color: var(--gray-700);
 }
 
+/* Modal Person Info */
 .modal-person {
     text-align: center;
 }
 
-.modal-person .icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+.modal-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 1rem;
+}
+
+.modal-avatar.male {
+    background: var(--male-bg);
+}
+
+.modal-avatar.female {
+    background: var(--female-bg);
 }
 
 .modal-person h2 {
-    font-size: 1.8rem;
-    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 1.5rem;
+}
+
+.modal-details {
+    text-align: left;
+}
+
+.modal-detail-row {
+    display: flex;
+    padding: 0.75rem 1rem;
+    background: var(--gray-50);
+    border-radius: var(--radius);
     margin-bottom: 0.5rem;
 }
 
-.modal-person .detail {
-    margin: 0.75rem 0;
-    padding: 0.75rem;
-    background: var(--bg-color);
-    border-radius: 8px;
+.modal-detail-row .label {
+    font-weight: 600;
+    color: var(--gray-600);
+    min-width: 80px;
 }
 
-.modal-person .label {
-    font-weight: bold;
-    color: #666;
+.modal-detail-row .value {
+    color: var(--gray-900);
 }
 
-/* 頁尾 */
+.modal-children-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.modal-children-section h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 0.75rem;
+}
+
+.modal-children-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.modal-child-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--gray-100);
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    color: var(--gray-700);
+}
+
+/* === Footer === */
 footer {
-    text-align: center;
-    padding: 2rem;
-    background: var(--primary-color);
+    background: var(--primary-800);
     color: white;
+    padding: 2rem;
+    text-align: center;
     margin-top: 3rem;
 }
 
-/* 搜尋高亮 */
-.search-highlight {
-    background: #FFEB3B;
-    padding: 0 2px;
-    border-radius: 2px;
+.footer-content p {
+    margin: 0.25rem 0;
 }
 
-/* 響應式設計 */
+.footer-note {
+    font-size: 0.8125rem;
+    opacity: 0.7;
+}
+
+/* === 年長者友善優化 === */
+/* 增大基礎字體 */
+html {
+    font-size: 18px; /* 基礎字體放大 */
+}
+
+/* 增加對比度和點擊區域 */
+.person-row {
+    min-height: 60px; /* 增大點擊區域 */
+    padding: 0.875rem 1rem;
+}
+
+.person-name {
+    font-size: 1.125rem; /* 放大姓名 */
+}
+
+.person-type {
+    font-size: 0.875rem;
+}
+
+.person-spouse {
+    font-size: 0.9375rem;
+}
+
+.family-header {
+    min-height: 70px; /* 增大標題區域 */
+    padding: 1.125rem 1.5rem;
+}
+
+.family-names .main-name {
+    font-size: 1.25rem;
+}
+
+.family-names .spouse-name {
+    font-size: 0.9375rem;
+}
+
+.type-badge {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.625rem;
+    min-width: 56px;
+}
+
+/* 按鈕放大 */
+.btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    min-height: 48px; /* 確保最小點擊區域 */
+}
+
+.btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* 搜尋框放大 */
+.search-box input {
+    padding: 1rem 2.75rem 1rem 3rem;
+    font-size: 1.0625rem;
+    min-height: 52px;
+}
+
+.search-icon {
+    width: 22px;
+    height: 22px;
+    left: 14px;
+}
+
+.clear-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+}
+
+/* Modal 放大 */
+.modal-content {
+    padding: 2.5rem;
+}
+
+.modal-avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 3rem;
+}
+
+.modal-person h2 {
+    font-size: 1.75rem;
+}
+
+.modal-detail-row {
+    padding: 1rem 1.25rem;
+    font-size: 1.0625rem;
+}
+
+.modal-detail-row .label {
+    min-width: 90px;
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+    font-size: 1.75rem;
+}
+
+/* 統計卡片放大 */
+.stat-card {
+    padding: 1rem 1.5rem;
+    min-width: 160px;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+}
+
+.stat-info .stat-value {
+    font-size: 1.75rem;
+}
+
+.stat-info .stat-label {
+    font-size: 0.875rem;
+}
+
+/* 始祖卡片 */
+.ancestor-person .name {
+    font-size: 2rem;
+}
+
+.ancestor-person .role {
+    font-size: 1rem;
+}
+
+/* 代數標籤 */
+.generation-label {
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.nested-children .generation-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.625rem;
+}
+
+/* 子女指示器 */
+.has-children-indicator {
+    font-size: 0.875rem;
+}
+
+/* === Responsive - 手機版特別優化 === */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 1.8rem;
-        letter-spacing: 0.1em;
+    html {
+        font-size: 17px; /* 手機稍微縮小但仍比預設大 */
     }
 
-    .controls input {
+    header {
+        padding: 1.25rem 1rem;
+    }
+
+    .logo-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+
+    .logo-text h1 {
+        font-size: 1.375rem;
+        letter-spacing: 0.05em;
+    }
+
+    .logo-text .subtitle {
+        font-size: 0.8125rem;
+    }
+
+    .header-meta .version {
+        display: none; /* 手機隱藏版本號 */
+    }
+
+    .toolbar {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-box {
+        max-width: 100%;
         width: 100%;
     }
 
-    .children-container {
-        grid-template-columns: 1fr;
+    .search-box input {
+        font-size: 1rem;
+        padding: 0.875rem 2.5rem 0.875rem 2.75rem;
+        min-height: 50px;
+    }
+
+    .toolbar-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        justify-content: center;
+        padding: 0.875rem 1rem;
+        font-size: 0.9375rem;
+    }
+
+    .stats-section {
+        padding: 1rem;
+    }
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        min-width: auto;
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .stat-info .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-info .stat-label {
+        font-size: 0.8125rem;
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
+
+    .ancestor-section {
+        margin-bottom: 1.5rem;
     }
 
     .ancestor-card {
-        padding: 1.5rem 2rem;
+        padding: 1.5rem 1.25rem;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .stat-item {
-        padding: 0.5rem 1rem;
+    .ancestor-card::before {
+        font-size: 0.6875rem;
+        padding: 0.25rem 0.75rem;
+    }
+
+    .ancestor-names {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .ancestor-person .name {
+        font-size: 1.5rem;
+    }
+
+    .ancestor-person .role {
+        font-size: 0.875rem;
+    }
+
+    .ancestor-connector {
+        font-size: 1.25rem;
+    }
+
+    .tree-connector {
+        height: 30px;
+    }
+
+    .generation-label {
+        font-size: 0.875rem;
+        padding: 0.375rem 1rem;
+    }
+
+    .family-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .family-header {
+        padding: 1rem;
+        min-height: 64px;
+    }
+
+    .family-main-info {
+        gap: 0.625rem;
+    }
+
+    .type-badge {
+        font-size: 0.8125rem;
+        min-width: 48px;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .family-names .main-name {
+        font-size: 1.125rem;
+    }
+
+    .family-names .spouse-name {
+        font-size: 0.875rem;
+    }
+
+    .toggle-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .children-list {
+        padding: 0.625rem;
+    }
+
+    .person-row {
+        padding: 0.75rem;
+        min-height: 56px;
+        flex-wrap: wrap;
+    }
+
+    .person-order {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8125rem;
+    }
+
+    .person-name {
+        font-size: 1.0625rem;
+    }
+
+    .person-type {
+        font-size: 0.8125rem;
+    }
+
+    .person-spouse {
+        font-size: 0.875rem;
+        width: 100%;
+        margin-top: 0.375rem;
+        padding-left: calc(28px + 0.75rem); /* 對齊序號後 */
+    }
+
+    .person-note {
+        font-size: 0.8125rem;
+    }
+
+    .has-children-indicator {
+        font-size: 0.8125rem;
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .person-row {
+        position: relative;
+        padding-right: 4rem; /* 給指示器留空間 */
+    }
+
+    .nested-children {
+        margin-left: 1rem;
+        padding-left: 0.75rem;
+    }
+
+    .nested-children .generation-tag {
+        font-size: 0.6875rem;
+    }
+
+    /* Modal 手機優化 */
+    .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+        max-height: calc(100vh - 2rem);
+    }
+
+    .modal-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+
+    .modal-person h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-detail-row {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .modal-detail-row .label {
+        min-width: auto;
+        font-size: 0.875rem;
+    }
+
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.5rem;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .modal-children-section h3 {
+        font-size: 1rem;
+    }
+
+    .modal-child-tag {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.875rem;
+    }
+
+    footer {
+        padding: 1.5rem 1rem;
+        margin-top: 2rem;
+    }
+
+    .footer-content p {
+        font-size: 0.9375rem;
+    }
+
+    .footer-note {
+        font-size: 0.8125rem;
     }
 }
 
-/* 列印樣式 */
+/* === 超小螢幕（iPhone SE 等） === */
+@media (max-width: 375px) {
+    html {
+        font-size: 16px;
+    }
+
+    .logo-text h1 {
+        font-size: 1.25rem;
+    }
+
+    .ancestor-person .name {
+        font-size: 1.375rem;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-card:last-child {
+        grid-column: span 2;
+    }
+}
+
+/* === Print Styles === */
 @media print {
-    .controls, .modal {
+    html {
+        font-size: 12pt;
+    }
+
+    .toolbar, .modal, footer {
         display: none !important;
     }
 
@@ -474,5 +1291,10 @@ footer {
 
     .family-children {
         max-height: none !important;
+    }
+
+    .family-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
     }
 }

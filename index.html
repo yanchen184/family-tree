@@ -4,35 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>許氏家族族譜</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>許氏家族族譜</h1>
-        <p class="subtitle">傳承家族記憶，凝聚血脈情誼</p>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">族</span>
+                <div class="logo-text">
+                    <h1>許氏家族族譜</h1>
+                    <p class="subtitle">傳承家族記憶・凝聚血脈情誼</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <span class="version">v2.0</span>
+            </div>
+        </div>
     </header>
 
-    <div class="controls">
-        <input type="text" id="searchInput" placeholder="搜尋姓名...">
-        <button id="expandAll">全部展開</button>
-        <button id="collapseAll">全部收合</button>
-    </div>
+    <nav class="toolbar">
+        <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" id="searchInput" placeholder="搜尋家族成員...">
+            <button id="clearSearch" class="clear-btn" title="清除搜尋">×</button>
+        </div>
+        <div class="toolbar-actions">
+            <button id="expandAll" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+                展開全部
+            </button>
+            <button id="collapseAll" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m18 15-6-6-6 6"/>
+                </svg>
+                收合全部
+            </button>
+        </div>
+    </nav>
 
-    <div class="stats" id="stats"></div>
+    <section class="stats-section">
+        <div class="stats-container" id="stats"></div>
+    </section>
 
-    <main id="familyTree">
-        <!-- 族譜樹將由 JavaScript 生成 -->
+    <main class="main-content">
+        <div class="ancestor-section" id="ancestorSection"></div>
+        <div class="generation-label">第二代</div>
+        <div class="family-grid" id="familyGrid"></div>
     </main>
 
     <div id="modal" class="modal">
+        <div class="modal-overlay"></div>
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <button class="modal-close">&times;</button>
             <div id="modalBody"></div>
         </div>
     </div>
 
     <footer>
-        <p>許氏家族族譜 &copy; 2026</p>
+        <div class="footer-content">
+            <p>許氏家族族譜 &copy; 2026</p>
+            <p class="footer-note">資料更新至第五代</p>
+        </div>
     </footer>
 
     <script src="app.js"></script>
