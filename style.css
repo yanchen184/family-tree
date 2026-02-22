@@ -1,4 +1,4 @@
-/* 許氏家族族譜 v3.0 - 樹狀結構樣式 */
+/* 許氏家族族譜 v3.2 - 樹狀結構樣式 */
 
 /* === 基礎設定 === */
 :root {
@@ -74,7 +74,7 @@ body::before {
     background-position: center top;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    opacity: 0.08;
+    opacity: 0.15;
     z-index: -1;
     pointer-events: none;
 }
