@@ -58,6 +58,25 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
+    position: relative;
+}
+
+/* 太岳衍派祠堂淡化背景圖 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('public/background.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.08;
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* === Header === */
