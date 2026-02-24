@@ -246,7 +246,7 @@
               "type": "長男"
             },
             {
-              "name": "曾琬",
+              "name": "曾琬庭",
               "type": "長女"
             },
             {
@@ -354,11 +354,13 @@
         },
         {
           "name": "許束美",
-          "type": "四女"
+          "type": "四女",
+          "spouse": "陳良雄",
+          "note": "歿"
         },
         {
           "name": "許晉榮",
-          "type": "次男",
+          "type": "長男",
           "spouse": "鄭青青",
           "children": [
             {
@@ -391,7 +393,7 @@
             {
               "name": "黃政哲",
               "type": "長子",
-              "spouse": "000",
+              "spouse": "吳亞璇",
               "children": [
                 {
                   "name": "黃奕文",
@@ -468,7 +470,7 @@
         {
           "name": "許益智",
           "type": "次男",
-          "spouse": "洪韾(離)",
+          "spouse": "洪馨(離)",
           "children": [
             {
               "name": "許凱博",
@@ -580,9 +582,12 @@
           "type": "次男",
           "children": [
             {
-              "name": "楊宜憲",
-              "type": "長男",
-              "spouse": "蘇佳睿"
+              "name": "李佳玲",
+              "type": "長女"
+            },
+            {
+              "name": "李晉銘",
+              "type": "長男"
             }
           ]
         },
@@ -591,6 +596,11 @@
           "type": "三女",
           "spouse": "楊勝德",
           "children": [
+            {
+              "name": "楊宜憲",
+              "type": "長男",
+              "spouse": "蘇佳睿"
+            },
             {
               "name": "楊書晨",
               "type": "長女"
@@ -629,24 +639,17 @@
             {
               "name": "粘閔鈞",
               "type": "長男",
-              "spouse": "張維麟",
-              "children": [
-                {
-                  "name": "粘芯玥",
-                  "type": "長女"
-                }
-              ]
+              "spouse": "張維麟"
+            },
+            {
+              "name": "粘芯玥",
+              "type": "長女",
+              "spouse": "洪銘宏"
             },
             {
               "name": "粘郁苓",
               "type": "次女",
-              "spouse": "林冠宇",
-              "children": [
-                {
-                  "name": "粘芯玥",
-                  "type": "長女"
-                }
-              ]
+              "spouse": "林冠宇"
             }
           ]
         }
@@ -791,7 +794,7 @@
         },
         {
           "name": "林坤輝",
-          "type": "三子",
+          "type": "三男",
           "spouse": "林麗玲",
           "children": [
             {
@@ -831,10 +834,6 @@
           "type": "長男",
           "spouse": "黃玉鶯",
           "children": [
-            {
-              "name": "張硯澤",
-              "type": "長男"
-            },
             {
               "name": "張軍騰",
               "type": "長男",
@@ -919,7 +918,7 @@
         },
         {
           "name": "陳輝棨",
-          "type": "三子",
+          "type": "三男",
           "spouse": "池爾玉",
           "children": [
             {
@@ -955,15 +954,15 @@
       "spouse": "許林碧霞",
       "children": [
         {
+          "name": "許淑媚",
+          "type": "長女",
+          "spouse": "劉明龍"
+        },
+        {
           "name": "許銘松",
           "type": "長男",
           "spouse": "周淑娟",
           "children": [
-            {
-              "name": "許淑媚",
-              "type": "長女",
-              "spouse": "劉明龍"
-            },
             {
               "name": "許正杰",
               "type": "長男"
@@ -1077,7 +1076,7 @@
     {
       "name": "梁寶貴",
       "type": "誼女",
-      "spouse": "林連眛",
+      "spouse": "林連昧",
       "children": [
         {
           "name": "林淑玲",
@@ -1087,18 +1086,16 @@
         {
           "name": "林來旺",
           "type": "長男",
-          "spouse": "吳金蘭",
-          "children": [
-            {
-              "name": "林庭鈺",
-              "type": "長女"
-            }
-          ]
+          "spouse": "吳金蘭"
         },
         {
           "name": "林宏德",
           "type": "次男",
           "children": [
+            {
+              "name": "林庭鈺",
+              "type": "長女"
+            },
             {
               "name": "林思穎",
               "type": "次女"
