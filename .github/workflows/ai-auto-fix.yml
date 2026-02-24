@@ -39,27 +39,19 @@ jobs:
           LABELS='${{ toJson(github.event.issue.labels.*.name) }}'
           TITLE='${{ github.event.issue.title }}'
           BODY='${{ github.event.issue.body }}'
-
           TRIGGERED=false
-
-          # Check label
           if echo "$LABELS" | grep -q "auto-fix"; then
             echo "Triggered by: auto-fix label"
             TRIGGERED=true
           fi
-
-          # Check title for [auto-fix]
           if echo "$TITLE" | grep -qi "\[auto-fix\]"; then
             echo "Triggered by: [auto-fix] in title"
             TRIGGERED=true
           fi
-
-          # Check body for [auto-fix]
           if echo "$BODY" | grep -qi "\[auto-fix\]"; then
             echo "Triggered by: [auto-fix] in body"
             TRIGGERED=true
           fi
-
           if [ "$TRIGGERED" = false ]; then
             echo "No auto-fix trigger found, skipping"
             echo "skip=true" >> $GITHUB_OUTPUT
@@ -156,7 +148,7 @@ jobs:
                   body: JSON.stringify({
                     model: 'gpt-4o-mini',
                     messages: [
-                      { role: 'system', content: 'You are a helpful assistant that fixes GitHub issues. Always respond with valid JSON only.' },
+                      { role: 'system', content: 'You are a careful assistant. Make MINIMAL changes. NEVER delete code unless asked. If unclear, make NO changes. Respond with JSON only.' },
                       { role: 'user', content: prompt }
                     ],
                     temperature: 0.1,
@@ -221,15 +213,19 @@ jobs:
               }
             }
 
-            const prompt = 'Fix this GitHub issue by modifying files.\n\n' +
-              'Issue: ' + ISSUE_TITLE + '\n' + ISSUE_BODY + '\n\n' +
+            const prompt = 'Fix this GitHub issue.\n\n' +
+              'Issue Title: ' + ISSUE_TITLE + '\n' +
+              'Issue Body: ' + ISSUE_BODY + '\n\n' +
               'Files:\n' + codeContext + '\n\n' +
-              'Reply with ONLY valid JSON (no markdown):\n' +
-              '{"path":"file.md","content":"full file content","summary":"what you fixed"}\n\n' +
-              'Rules:\n' +
-              '- One file only\n' +
-              '- Full content, no diffs\n' +
-              '- No markdown code blocks';
+              'CRITICAL RULES:\n' +
+              '1. If issue is UNCLEAR or does NOT specify what to fix: {"path":"","content":"","summary":"Issue unclear - no changes"}\n' +
+              '2. Make ONLY MINIMAL changes - do NOT modify unrelated code\n' +
+              '3. NEVER delete large sections of code\n' +
+              '4. If changing a word, change ONLY that word\n' +
+              '5. When unsure, make NO changes\n\n' +
+              'JSON response (no markdown):\n' +
+              '{"path":"file","content":"full content","summary":"what changed"}\n' +
+              'Rules: One file, full content, no code blocks';
 
             console.log('Calling OpenAI...');
             const response = await callOpenAI(prompt);
@@ -253,6 +249,8 @@ jobs:
               fs.writeFileSync(fix.path, fix.content);
               changed.push(fix.path);
               console.log('Modified:', fix.path);
+            } else {
+              console.log('No changes:', fix.summary || 'Unknown reason');
             }
 
             fs.writeFileSync('fix-result.json', JSON.stringify({
@@ -288,6 +286,10 @@ jobs:
           echo "success=$SUCCESS" >> $GITHUB_OUTPUT
           echo "summary=$SUMMARY" >> $GITHUB_OUTPUT
 
+      - name: Cleanup temp files
+        if: steps.check_trigger.outputs.skip != 'true'
+        run: rm -f fix-issue.mjs fix-result.json
+
       - name: Create Pull Request
         if: steps.check_trigger.outputs.skip != 'true' && steps.check.outputs.success == 'true'
         uses: peter-evans/create-pull-request@v5
@@ -309,7 +311,7 @@ jobs:
           delete-branch: true
 
       - name: Auto merge PR
-        if: steps.check.outputs.success == 'true'
+        if: steps.check_trigger.outputs.skip != 'true' && steps.check.outputs.success == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -320,7 +322,7 @@ jobs:
           fi
 
       - name: Comment on success
-        if: steps.check.outputs.success == 'true'
+        if: steps.check_trigger.outputs.skip != 'true' && steps.check.outputs.success == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
